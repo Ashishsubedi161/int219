@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intca</title>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="#intro">Intro</a>
+            </li>
+            <li>
+                <a href="#algo">Algo</a>
+            </li>
+            <li>
+                <a href="#implementation">Implementation</a>
+            </li>
+        </ul>
+    </div>
+    <div class="box1" id="intro">
+        <div class="intro">
+            <div class="heading">
+                <h1>STOOGE SORT</h1>
+            </div>
+            <div class="description">
+                <p>Stooge Sort is a recursive sorting algorithm. It is not much efficient but interesting sorting algorithm. It generally divides the array into two overlapping parts (2/3 each). After that it performs sorting in first 2/3 part and then it performs sorting in last 2/3 part. And then, sorting is done on first 2/3 part to ensure that the array is sorted.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="box2" id="algo">
+    <div class="heading">
+        <h2>ALGORITHM</h2>
+
+    </div>
+    <div class="content">
+        <ul>
+            <li>If the value at the start is larger than the value at the end, swap them.</li>
+            <li>Recursively sort the first 2/3 part of the array.</li>
+            <li>Recursively sort the last 2/3 part of the array.</li>
+            <li>Again sort the firsty 2/3 part of the array.
+            </li>
+            <li>The array becomes finally sorted.</li>
+        </ul>
+    </div>
+    <div class="content2">
+        <div class="title">
+            <h2>EXAMPLE</h2>
+            
+        </div>
+        <div class="example">
+            <li>Lets consider an example: arr[] = {2, 4, 5, 3, 1}</li>
+            <li><b>Step1:</b> Initially, First and last elements are compared and if last is greater than first then they are swapped.</li>
+            <div class="eg">
+                14532   
+            </div>
+            <li><b>Step2:</b> Now, recursively sort initial 2/3rd of the elements as shown below:</li>
+            <div class="eg">
+             14532
+            </div>
+            <li><b> Step3:</b>Then, recursively sort last 2/3rd of the elements, as shown below:</li>
+            <div class="eg">
+                14532
+            </div>
+            <div class="eg">
+                13452
+            </div>
+            <li> <b>Again,</b> sort the initial 2/3rd of the elements to confirm final data is sorted.
+                Resulted array:</li>
+                <div class="eg">
+                    12345
+                </div>
+
+        </div>
+    </div>
+    </div>
+    <div class="box3" id="implementation">
+        <div class="heading">
+            <h1>IMPLIMENTATION</h1>
+        </div>
+        <div class="code">
+            <div class="arrayinput">
+            <p>Please input some number below:</p>
+
+            <div class="arraytext"><span>Input Array: [</span>
+                <span class="init-array"></span>]</div>
+            <input class="inputnumber" type="text">
+            
+        </div>
+        <button type="button" class="addtoarray">
+            Add
+        </button>
+            <button type="button" class="sort">
+                Sort
+            </button>
+            <div class="final"><span>Sorted Array: [</span>
+                <span class="sortedarray"></span>]</div>
+    
+        </div>
+
+        </div>
+
+    <script>
+        window.onload = function() {
+        init();
+};
+
+
+function stoogeSort(items) {
+  var array = [];
+  
+  if ( items ) {
+    array = items.map(function(item) { return item; });
+  }
+  
+  performStoogeSort(array, 0, array.length - 1);
+  
+  return array;
+}
+
+function performStoogeSort(array, low, high) {
+  var t;
+  
+  if ( array[low] > array[high] ) {
+    swap(array, low, high);
+  }
+  
+  if ( (high - low + 1) > 2 ) {
+    t = Math.floor((high - low + 1) / 3);
+    performStoogeSort(array, low, high - t);
+    performStoogeSort(array, low + t, high);
+    performStoogeSort(array, low, high - t);
+  }
+}
+
+function swap(array, i, j) {
+  var temp = array[i];
+  array[i] = array[j];
+  array[j] = temp;
+}
+
+    function init(){
+        
+        const addtoarray=document.querySelector('.addtoarray')
+        let array=[]
+
+        addtoarray.addEventListener('click',()=>{
+
+            let inputnumber = document.querySelector('.inputnumber')
+            array.push(parseInt(inputnumber.value))
+            inputnumber.value = ''
+            
+            document.querySelector('.init-array').innerHTML = array.map(e=>{
+                return e
+            }) 
+        })
+
+        const sort=document.querySelector('.sort')
+        sort.addEventListener('click',()=>{
+            const sortedarray = stoogeSort(array)
+            let sortedarrayHolder = document.querySelector('.sortedarray')
+
+            sortedarrayHolder.innerHTML = sortedarray.map(e=>{
+                return e
+            }) 
+            
+            
+
+
+        })
+        
+
+
+
+    }
+    </script>
+
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body{
+        font-family:serif;
+    }
+
+    .navbar{
+        padding: 30px;
+        background-color: rgba(7, 7, 7, 0.902);
+        border-bottom: 2px solid white;
+
+       
+    }
+
+    .navbar ul{
+        list-style: none;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .navbar li{
+
+        margin: 0 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .navbar li a{
+        border:transparent solid 2px  ;
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 15px 25px;
+
+
+    }
+    .navbar li a:hover{
+        border:rgba(178, 7, 7, 0.785) solid 2px ;
+                transition: 0.1s ease-in-out ;
+        
+
+    
+    }
+    .box1{
+        
+        padding: 100px 150px;
+        margin: 0 ;
+        background-color: aqua;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    
+    .intro{
+        padding: 0px;
+        
+        
+    }
+    .intro .heading{
+        display: flex;
+        padding-bottom: 60px;
+        font-size: 40px;
+        font-weight: 500;
+        justify-content: center;
+
+    }
+    .intro .description{
+        padding: 70px ;
+        background-color: rgba(0, 0, 0, 0.059);
+        border-radius: 15px;
+        box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    }
+    .intro .description p{
+        padding:  0 70px;
+        font-size: 22px;
+
+    }
+
+    .box2{
+        
+        padding: 100px 150px;
+        background-color: rgba(237, 20, 107, 0.42);
+    }
+    .box2 .heading{
+        padding:  100px 30px;
+        font-size: 32px;
+        text-align: center;
+    }
+    .box2 .content{
+        display: flex;
+        padding:50px 30px;
+        border-radius:15px;
+        background-color: rgba(0, 0, 0, 0.116);
+        font-size: 24px;
+        line-height:45px;
+        justify-content: center;
+        align-items:center;
+        box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    }
+    .content2{
+
+        padding: 70px 0;
+        font-size: 35px;
+    }
+    .content2 .example{
+        padding: 10px 150px 30px 150px;
+        font-size: 24px;
+        box-shadow: rgb(38, 57, 77) 1px 20px 30px -1px;
+        border-radius: 30px;
+
+    }
+    .content2 .title{
+        padding-bottom: 70px;
+        text-align: center;
+    }
+    .content2 .example li{
+        padding: 30px;
+
+
+    }
+    .content2 .example .eg{
+        text-align: left;
+        color: white;
+        padding: 30px;
+        background-color: rgba(0, 0, 0, 0.9);
+        letter-spacing: 0.3in;
+        border-radius: 15px;
+        margin-top: 10px;
+        box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        
+    }
+
+    .box3{
+
+        padding: 100px 150px;
+        background-color: rgb(20, 19, 19);
+        
+    }
+    .box3 .heading{
+        display: flex;
+        padding-bottom: 60px;
+        padding-top: 50px;
+        color: white;
+        font-size: 40px;
+        font-weight: 500;
+        justify-content: center;
+    }
+    .box3 .code{
+ 
+        border-radius: 15px;
+        background-color: rgba(255, 255, 255, 0.936);
+        padding: 30px 50px;
+        text-align: center;
+
+        
+
+
+
+    }
+
+    .box3 .code p{
+        padding-bottom: 30px;
+        font-size: 36px;
+        
+
+
+    }
+    .box3 .arraytext{
+        font-size: 32px;
+        padding: 20px;
+    }
+    .box3 .inputnumber{
+        padding: 20px 150px;
+        background-color: rgba(0, 0, 0, 0.801);
+        border-radius: 14px;
+        color: white;
+        box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    }
+    
+    .box3 button{
+        padding: 15px 40px;
+        margin: 30px;
+        border-radius: 5px;
+        background-color: black;
+        color: white;
+        cursor: pointer;
+        box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+
+
+
+
+    }
+    .box3 .final{
+        font-size: 36px;
+    }
+
+
+    
+</style>
+    
+</body>
+
+
+
+</html>
